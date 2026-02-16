@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Chúc Mừng Năm Mới 2026</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+      :root {
+        --tet-red: linear-gradient(180deg, #b30000 0%, #d62828 40%, #ff4d4d 100%);
+        --tet-gold: #ffd700;
+      }
+
+      /* BODY */
+      body {
+        margin: 0;
+        font-family: "Be Vietnam Pro", sans-serif;
+        background: var(--tet-red);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+
+      /* FIREWORK CANVAS */
+      #fireworks {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+      }
+
+      /* CONTAINER */
+      .container {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 420px;
+        background: linear-gradient(180deg, #c1121f, #e63946);
+        border-radius: 20px;
+        padding: 20px;
+        text-align: center;
+        box-shadow:
+          0 0 30px rgba(255, 215, 0, 0.7),
+          inset 0 0 10px rgba(255, 255, 255, 0.2);
+      }
+
+      /* TEXT */
+      .title {
+        color: var(--tet-gold);
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      .subtitle {
+        color: #ffe066;
+        font-size: 16px;
+        margin: 12px 0;
+      }
+
+      /* IMAGE */
+      .image-frame {
+        border-radius: 16px;
+        padding: 4px;
+        background: linear-gradient(45deg, #ffd700, #ffae00, #ffd700);
+        margin-bottom: 16px;
+      }
+
+      .image-frame img {
+        width: 100%;
+        border-radius: 14px;
+      }
+
+      /* BUTTON */
+      .button {
+        background: linear-gradient(180deg, #ffd700, #ffb700);
+        border: none;
+        border-radius: 12px;
+        padding: 14px;
+        width: 100%;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        color: #b30000;
+      }
+
+      .button:active {
+        transform: scale(0.95);
+      }
+
+      /* FOOTER */
+      footer {
+        margin-top: 10px;
+        font-size: 12px;
+        color: #ffe066;
+      }
+
+      /* PETALS */
+      .petals span {
+        position: fixed;
+        top: -10px;
+        font-size: 20px;
+        animation: fall linear infinite;
+        z-index: 1;
+      }
+
+      @keyframes fall {
+        to {
+          transform: translateY(110vh) rotate(360deg);
+        }
+      }
+
+      /* SAFE AREA IPHONE */
+      @supports (padding: max(0px)) {
+        body {
+          padding-top: max(16px, env(safe-area-inset-top));
+          padding-bottom: max(16px, env(safe-area-inset-bottom));
+        }
+      }
+
+      /* FULLSCREEN LIXI */
+      #lixiOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(180deg, #b30000, #d62828);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+        transition: opacity 0.8s ease;
+      }
+
+      .lixi-center {
+        text-align: center;
+        color: gold;
+      }
+
+      .lixi-envelope {
+        font-size: 100px;
+        cursor: pointer;
+        animation: pulse 1.5s infinite;
+        transition: transform 0.6s, opacity 0.6s;
+      }
+
+      .lixi-message {
+        margin-top: 15px;
+        font-size: 18px;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.15);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /* OPEN EFFECT */
+      .lixi-open {
+        transform: scale(1.5) rotateY(360deg);
+        opacity: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- FULLSCREEN LIXI OVERLAY -->
+    <div id="lixiOverlay">
+      <div class="lixi-center">
+        <div class="lixi-envelope" id="lixiEnvelope">
+          🧧
+        </div>
+        <div class="lixi-message">
+          Nhấn vô màn hình để thấy được những điều thú vị phía sau ✨
+        </div>
+      </div>
+    </div>
+
+    <!-- FIREWORKS CANVAS -->
+    <canvas id="fireworks"></canvas>
+
+    <!-- PETALS -->
+    <div class="petals"></div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+      <div class="title">
+        🎊 Happy new year, <span id="name">Bạn</span>
+      </div>
+
+      <div class="subtitle">
+        Chúc bạn Linh năm mới thành công và tràn đầy tài lộc nhé ❤️
+      </div>
+
+      <div class="image-frame">
+        <img id="tetImage" src="final.png" alt="Tet Image" />
+      </div>
+
+      <button class="button" onclick="toggleMusic()">
+        Turn On / Off 🎵
+      </button>
+
+      <footer>
+        Năm tới master model-ling nhé ✨ I believe in you!
+      </footer>
+    </div>
+
+    <!-- AUDIO -->
+    <audio id="music" loop>
+      <source src="Nhactet_tiktok.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script>
+      /* ================= */
+      /* CUSTOM LINK */
+      /* ================= */
+
+      const params = new URLSearchParams(window.location.search);
+      const name = params.get("name");
+      const img = params.get("img");
+
+      if (name) {
+        document.getElementById("name").innerText = name;
+      }
+
+      if (img) {
+        document.getElementById("tetImage").src = img;
+      }
+
+      /* ================= */
+      /* MUSIC */
+      /* ================= */
+
+      let playing = false;
+
+      function toggleMusic() {
+        const music = document.getElementById("music");
+
+        if (playing) {
+          music.pause();
+          playing = false;
+        } else {
+          music.play();
+          playing = true;
+        }
+      }
+
+      /* ================= */
+      /* PETALS */
+      /* ================= */
+
+      const petals = document.querySelector(".petals");
+
+      for (let i = 0; i < 25; i++) {
+        const petal = document.createElement("span");
+        petal.innerHTML = "🌸";
+        petal.style.left = Math.random() * 100 + "vw";
+        petal.style.animationDuration = 5 + Math.random() * 5 + "s";
+        petal.style.opacity = Math.random();
+        petals.appendChild(petal);
+      }
+
+      /* ================= */
+      /* FIREWORKS */
+      /* ================= */
+
+      const canvas = document.getElementById("fireworks");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      let fireworks = [];
+
+      class Firework {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = canvas.height;
+          this.targetY = Math.random() * canvas.height * 0.5;
+          this.exploded = false;
+          this.particles = [];
+        }
+
+        update() {
+          if (!this.exploded) {
+            this.y -= 4;
+
+            if (this.y <= this.targetY) {
+              this.exploded = true;
+
+              for (let i = 0; i < 40; i++) {
+                this.particles.push({
+                  x: this.x,
+                  y: this.y,
+                  dx: (Math.random() - 0.5) * 6,
+                  dy: (Math.random() - 0.5) * 6,
+                  life: 100,
+                });
+              }
+            }
+          }
+
+          this.particles.forEach((p) => {
+            p.x += p.dx;
+            p.y += p.dy;
+            p.life--;
+          });
+        }
+
+        draw() {
+          if (!this.exploded) {
+            ctx.fillStyle = "gold";
+            ctx.fillRect(this.x, this.y, 3, 3);
+          }
+
+          this.particles.forEach((p) => {
+            ctx.fillStyle = "rgba(255,215,0," + p.life / 100 + ")";
+            ctx.fillRect(p.x, p.y, 3, 3);
+          });
+        }
+      }
+
+      function animate() {
+        ctx.fillStyle = "rgba(180,0,0,0.2)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        if (Math.random() < 0.05) {
+          fireworks.push(new Firework());
+        }
+
+        fireworks.forEach((fw, i) => {
+          fw.update();
+          fw.draw();
+
+          if (fw.particles.length && fw.particles[0].life <= 0) {
+            fireworks.splice(i, 1);
+          }
+        });
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+
+      window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+
+      /* ================= */
+      /* FULLSCREEN LIXI CLICK */
+      /* ================= */
+
+      const overlay = document.getElementById("lixiOverlay");
+      const envelope = document.getElementById("lixiEnvelope");
+      const music = document.getElementById("music");
+
+      envelope.addEventListener("click", () => {
+        // Open animation lixi
+        envelope.classList.add("lixi-open");
+
+        // Auto play music
+        music
+          .play()
+          .then(() => {
+            playing = true;
+          })
+          .catch((err) => {
+            console.log("Autoplay blocked:", err);
+          });
+
+        // Fade overlay
+        setTimeout(() => {
+          overlay.style.opacity = "0";
+        }, 600);
+
+        // Remove overlay
+        setTimeout(() => {
+          overlay.style.display = "none";
+        }, 1400);
+      });
+    </script>
+  </body>
+</html>
